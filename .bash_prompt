@@ -9,6 +9,30 @@ elif infocmp xterm-256color >/dev/null 2>&1; then
 	export TERM='xterm-256color';
 fi;
 
+addLines(){
+	if [ $HOME == $PWD ]; then
+			PWDNAME="~"
+	elif [ $HOME ==  ${PWD:0:${#HOME}} ]; then
+			PWDNAME="~${PWD:${#HOME}}"
+	else
+		PWDNAME="${PWD}"
+	fi
+
+	local currentDateTime=`date +'%F %H:%M:%S'`
+	withoutColor=$(printf "${USER} at ${HOSTNAME} in ${PWDNAME} ${1} ${currentDateTime}")
+
+	local fillSize=$(($COLUMNS-${#withoutColor}))
+	local fillLines="${black}"
+
+	while [ $fillSize -gt 0 ];
+	do
+		fillLines="${fillLines}─";
+		fillSize=$(($fillSize-1));
+	done
+
+	echo -e "${fillLines} ${currentDateTime}";
+}
+
 prompt_git() {
 	local s='';
 	local branchName='';
@@ -53,9 +77,12 @@ prompt_git() {
 
 		[ -n "${s}" ] && s=" [${s}]";
 
-		echo -e "${1}${branchName}${blue}${s}";
+		local fillLine=$(addLines " on ${branchName}${s}");
+		echo -e "${1}${branchName}${blue}${s} ${fillLine}";
 	else
-		return;
+		local fillLine=$(addLines)
+		echo -e " ${fillLine}";
+		# return;
 	fi;
 }
 
@@ -105,7 +132,7 @@ fi;
 
 # Set the terminal title to the current working directory.
 PS1="\[\033]0;\w\007\]";
-PS1+="\[${bold}\]\n"; # newline
+#PS1+="\[${bold}\]\n"; # newline
 PS1+="\[${userStyle}\]\u"; # username
 PS1+="\[${white}\] at ";
 PS1+="\[${hostStyle}\]\h"; # host
