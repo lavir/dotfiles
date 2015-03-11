@@ -16,6 +16,19 @@ function calc() {
 	printf "\n";
 }
 
+# Go to latest Firefox dir
+function fox() {
+local LASTFOX="$(cat ~/Library/Application\ Support/Firefox/Profiles/kekeldns.default/prefs.js | grep "browser.download.lastDir" | sed -n 's/.*\".*\", \"\(.*\)\".*/\1/p')";
+if [ ! -d "$LASTFOX" ]; then
+  local LASTFOX="$(echo $LASTFOX | sed -n 's/\(.*\)\/.*/\1/p')";
+	if [ ! -d "$LASTFOX" ]; then
+		local LASTFOX="~/Downloads/firefox/"
+	fi
+fi
+
+cd $LASTFOX
+}
+
 # Create a new directory and enter it
 function mkd() {
 	mkdir -p "$@" && cd "$@";
