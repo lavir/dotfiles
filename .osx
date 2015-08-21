@@ -9,6 +9,25 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ###############################################################################
+# System                                                                      #
+###############################################################################
+
+# Change a limit of the maximum number of files that Mac OS X can open
+if [ -f /etc/sysctl.conf ]; then
+	echo "sysctl.confg exist"
+	echo "Check current values"
+	cat /etc/sysctl.conf | grep 'kern.maxfiles*'
+
+	sudo sed -i -e 's/kern.maxfiles=.*/kern.maxfiles=128000/' /etc/sysctl.conf
+	sudo sed -i -e 's/kern.maxfilesperproc=.*/kern.maxfilesperproc=128000/' /etc/sysctl.conf
+else
+	sudo echo "kern.maxfiles=128000" >> /etc/sysctl.conf
+	sudo echo "kern.maxfilesperproc=128000" >> /etc/sysctl.conf
+fi
+
+echo "Check changes"
+cat /etc/sysctl.conf | grep 'kern.maxfiles*'
+###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
 
@@ -737,6 +756,9 @@ defaults write com.google.Chrome.canary DisablePrintPreview -bool true
 
 # Install Sublime Text settings
 # cp -r init/Preferences.sublime-settings ~/Library/Application\ Support/Sublime\ Text*/Packages/User/Preferences.sublime-settings 2> /dev/null
+
+# Disable or Enable press-and-hold for keys in favor of key repeat
+defaults write com.sublimetext.3 ApplePressAndHoldEnabled -bool false
 
 ###############################################################################
 # Transmission.app                                                            #
