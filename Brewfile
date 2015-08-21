@@ -76,6 +76,10 @@ install tree
 install webkit2png
 install zopfli
 
+# Send User Notifications on Mac OS X 10.8 from the command-line.
+# https://github.com/alloy/terminal-notifier
+install terminal-notifier
+
 install homebrew/versions/lua52
 
 # Remove outdated versions from the cellar
