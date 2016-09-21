@@ -86,7 +86,11 @@ brew install dark-mode
 #brew install exiv2
 brew install git
 brew install git-lfs
-brew install imagemagick --with-webp
+# Use GraphicsMagick instead
+# brew install imagemagick --with-webp
+brew install ghostscript
+brew install graphicsmagick
+
 brew install lua
 brew install lynx
 brew install p7zip
@@ -100,6 +104,9 @@ brew install tree
 brew install webkit2png
 brew install zopfli
 brew install ngrep
+brew install duti
+brew install htop-osx
+brew install httpie
 
 # Remove outdated versions from the cellar.
 brew cleanup

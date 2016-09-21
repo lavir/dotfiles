@@ -34,6 +34,10 @@ addLines(){
 }
 
 prompt_git() {
+	# Set the terminal title to the current working directory.
+	# last dir
+	echo -e -n "\033];${PWD##*/}\007" 
+
 	local s='';
 	local branchName='';
 
@@ -130,12 +134,8 @@ else
 	hostStyle="${yellow}";
 fi;
 
-# Set the terminal title to the current working directory.
-# last dir
-LAST_DIR_FROM_PWD=${PWD##*/}
-PS1="\[\033]0;${LAST_DIR_FROM_PWD}\007\]";
-#PS1+="\[${bold}\]\n"; # newline
-PS1+="\[${userStyle}\]\u"; # username
+#PS1="\[\e]0;${LAST_DIR_FROM_PWD}\007\]";
+PS1="\[${userStyle}\]\u"; # username
 PS1+="\[${white}\] at ";
 PS1+="\[${hostStyle}\]\h"; # host
 PS1+="\[${white}\] in ";

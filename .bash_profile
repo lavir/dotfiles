@@ -1,5 +1,9 @@
+LANG="en_US.UTF-8"
+
 # Add `~/bin` to the `$PATH`
-export PATH="$HOME/bin:$PATH";
+export PATH="$HOME/bin:$HOME/Library/Android/sdk/platform-tools:$PATH";
+export ANDROID_HOME="/Users/lavir/Library/Android/sdk/";
+export PATH="$(brew --prefix homebrew/php/php56)/bin:$PATH"
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -46,3 +50,6 @@ complete -W "NSGlobalDomain" defaults;
 
 # Add `killall` tab completion for common apps
 complete -o "nospace" -W "Contacts Calendar Dock Finder Mail Safari iTunes SystemUIServer Terminal Twitter" killall;
+
+# Integrate iTerm Shell script
+source "$HOME/.iterm2_shell_integration.bash"

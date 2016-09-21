@@ -1,0 +1,36 @@
+# blank lines and lines beginning with a '#' are ignored
+#
+# NOTE: use '$ bid APP NAME' for getting bundle ID of the app
+#
+# To set the default application for a document type, duti needs three things:
+#
+#    An application bundle identifier (e.g., com.apple.Safari)
+#    The document type's UTI (e.g., public.html), extension or MIME type
+#    The role the application will play for the UTI (e.g., editor)
+#
+# To set the default application for a URL scheme, duti needs just two things:
+#
+#    An application bundle identifier (e.g., org.mozilla.Firefox)
+#    The URL scheme (e.g., feed, as in "feed://..." RSS URLs)
+#
+# bundle id								URI | UTI | ext | MIME type							role
+
+com.sublimetext.3									sh 															all
+com.sublimetext.3									txt 														all
+com.sublimetext.3									xml 															all
+com.sublimetext.3									md 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
+com.sublimetext.3									sh 															all
