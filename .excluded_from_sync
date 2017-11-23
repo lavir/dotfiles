@@ -1,0 +1,10 @@
+.git/
+.DS_Store
+.osx
+bootstrap.sh
+README.md
+LICENSE-MIT.txt
+.vscode
+.history
+.excluded_from_sync
+backups/
