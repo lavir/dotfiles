@@ -14,5 +14,8 @@ Thumbs.db
 .Trashes
 
 # VSCode
-.vscode/*
-.history/*
+.vscode/
+.history/
+
+# Private scripts
+.bash/
