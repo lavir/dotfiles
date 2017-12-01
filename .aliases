@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Show list of aliases
+alias alliases="compgen -c"
+alias aliases="compgen -a"
 
 # Easier navigation: .., ..., ...., ....., ~ and -
 alias ..="cd .."
@@ -9,14 +12,61 @@ alias ~="cd ~" # `cd` is probably faster to type though
 alias -- -="cd -"
 
 # Shortcuts
-alias d="cd ~/Documents/Dropbox"
+alias temp="cd ~/temp-folder"
 alias dl="cd ~/Downloads"
-alias dt="cd ~/Desktop"
-alias p="cd ~/projects"
+alias dtop="cd ~/Desktop"
+alias pj="cd ~/Projects"
+alias dev="cd ~/Development"
+alias pjo="cd ~/Projects/_open_source_projects"
+alias pjp="cd ~/Projects/personal"
 alias g="git"
 alias h="history"
 alias j="jobs"
 
+alias .files="cd /Users/lavir/Projects/personal/dotfiles"
+alias .rebuild="cd /Users/lavir/Projects/personal/dotfiles && ./bootstrap.sh && cd - && reload"
+alias hsl="routahe"
+alias sserver="simplehttp2server"
+
+#alias srm="sudo rm -rf"
+# List of SSH keys 
+alias keys="find ~/.ssh/keys -maxdepth 1 -type f -not -name '*.pub'"
+
+# Aliases for 3rd part apps
+## https://pypi.python.org/pypi/segno
+alias qr="/usr/local/bin/segno"
+
+# Docker
+alias d="docker"
+alias dco="docker-compose"
+
+# function dstop(){
+# 	docker stop $(docker ps -a -q)
+# }
+
+# function drm(){
+# 	docker rm $(docker ps -a -q)
+# }
+
+# function dclear(){
+# 	docker stop $(docker ps -a -q); 
+# 	docker rm $(docker ps -a -q); 
+# 	docker network rm $(docker network ls -q); 
+# }
+
+# function dvclear(){
+# 	docker volume rm $(docker volume ls -q)
+# }
+
+# function diclear(){
+# 	docker rmi -f $(docker images -q -a -f dangling=true)	
+# }
+
+# function daclear(){
+# 	dclear
+# 	dvclear
+# 	diclear
+# }
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"
@@ -27,13 +77,14 @@ else # macOS `ls`
 fi
 
 # List all files colorized in long format
-alias l="ls -lF ${colorflag}"
+alias l="ls -lTF ${colorflag}"
 
 # List all files colorized in long format, including dot files
-alias la="ls -laF ${colorflag}"
+alias la="ls -laTF ${colorflag}"
+alias ll="la"
 
 # List only directories
-alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
+alias lsd="ls -lTF ${colorflag} | grep --color=never '^d'"
 
 # Always use color output for `ls`
 alias ls="command ls ${colorflag}"
@@ -63,6 +114,7 @@ alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="ipconfig getifaddr en0"
 alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+alias ports="sudo lsof -i"
 
 # Show active network interfaces
 alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
@@ -73,7 +125,7 @@ alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 # Clean up LaunchServices to remove duplicates in the “Open With” menu
 alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
-# View HTTP traffic
+# View HTTP traffic (require ngrep)
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
@@ -119,6 +171,7 @@ alias mergepdf='/System/Library/Automator/Combine\ PDF\ Pages.action/Contents/Re
 
 # Disable Spotlight
 alias spotoff="sudo mdutil -a -i off"
+
 # Enable Spotlight
 alias spoton="sudo mdutil -a -i on"
 

@@ -197,26 +197,6 @@ function s() {
 	fi;
 }
 
-# `a` with no arguments opens the current directory in Atom Editor, otherwise
-# opens the given location
-function a() {
-	if [ $# -eq 0 ]; then
-		atom .;
-	else
-		atom "$@";
-	fi;
-}
-
-# `v` with no arguments opens the current directory in Vim, otherwise opens the
-# given location
-function v() {
-	if [ $# -eq 0 ]; then
-		vim .;
-	else
-		vim "$@";
-	fi;
-}
-
 # `o` with no arguments opens the current directory, otherwise opens the given
 # location
 function o() {
@@ -227,10 +207,107 @@ function o() {
 	fi;
 }
 
+# Open a file or directory in IntelliJ Idea
+function idea() {
+	# check for where the latest version of IDEA is installed
+IDEA=`ls -1d /Applications/IntelliJ\ * | tail -n1`
+
+if [ $# -eq 0 ]; then
+		open "$IDEA"
+	else
+		open -a "$IDEA" "$1"
+fi;	
+}
+
 # `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
 # the `.git` directory, listing directories first. The output gets piped into
 # `less` with options to preserve color and line numbers, unless the output is
 # small enough for one screen.
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+}
+
+function notify() {
+while [[ $# > 1 ]]
+do
+key="$1"
+
+case $key in
+    -title|--t)
+    TITLE="$2"
+    shift
+    ;;
+    -message|--m)
+    MESSAGE="$2"
+    shift
+    ;;
+    *)
+      echo "unknown option $1"
+    ;;
+esac
+shift
+done
+
+if [[ -n $1 ]]; then
+    echo "Last line of file specified as non-opt/last argument:"
+    tail -1 $1
+fi
+
+	terminal-notifier -title "${TITLE}" -message "${MESSAGE}" -sender com.googlecode.iterm2
+}
+
+bid() {
+	local shortname location
+
+	# combine all args as regex
+	# (and remove ".app" from the end if it exists due to autocomplete)
+	shortname=$(echo "${@%%.app}"|sed 's/.app$//g')
+	# if the file is a full match in apps folder, roll with it
+	if [ -d "/Applications/$shortname.app" ]; then
+		location="/Applications/$shortname.app"
+	else # otherwise, start searching
+		location=$(mdfind -onlyin /Applications -onlyin ~/Applications -onlyin /Developer/Applications 'kMDItemKind==Application'|awk -F '/' -v re="$shortname" 'tolower($NF) ~ re {print $0}'|head -n1)
+	fi
+	# No results? Die.
+	[[ -z $location || $location = "" ]] && echo "$1 not found, I quit" && return
+	# Otherwise, find the bundleid using spotlight metadata
+	bundleid=$(mdls -name kMDItemCFBundleIdentifier -r "$location")
+	# return the result or an error message
+	[[ -z $bundleid || $bundleid = "" ]] && echo "Error getting bundle ID for \"$@\"" || echo "$location: $bundleid"
+}
+
+# Change the mac address for en0 (usually is wifi)
+newMacAddress() {
+	HARDWARE_MAC=$(system_profiler SPNetworkLocationDataType |grep -A 4 'Wi-Fi'|grep 'Hardware (MAC) Address:' | awk -F' ' '{print $4}')
+	CURRENT_MAC=$(ifconfig en0 |grep ether |awk -F' ' '{print $2}')
+	GEN_NEW_MAC=$(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')
+	
+	if [ "$1" = "reset" ]; then
+		sudo ifconfig en0 ether $HARDWARE_MAC		
+		echo "The MAC Address has been reset to hardware MAC Address"
+		echo "$CURRENT_MAC » $HARDWARE_MAC"
+	else
+		sudo ifconfig en0 ether $GEN_NEW_MAC
+		# We'ew checking does it changed
+		NEW_MAC=$(ifconfig en0 |grep ether |awk -F' ' '{print $2}')	
+
+		if [ "$CURRENT_MAC" = "$NEW_MAC" ];  then
+			echo "The MAC address was not changed!"
+			echo "Current: $CURRENT_MAC"
+			echo "Hardware: $HARDWARE_MAC"
+		else
+			echo "The MAC address has been changed!"
+			echo "$CURRENT_MAC » $NEW_MAC"
+			echo "The hardware MAC address ($HARDWARE_MAC) will be restored after rebooting or by passing 'reset' parameter"
+		fi	
+	fi
+}
+
+# Dash 
+dash(){
+	if [ "$#" -ne "0" ]; then
+		open "dash://$1"
+	else
+		echo "Usage: dash query OR dash css:query"
+	fi
 }

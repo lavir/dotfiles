@@ -9,6 +9,10 @@ TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 BACKUP_DIR_NAME="backups"
 BACKUP_PATH="$(pwd)/$BACKUP_DIR_NAME/$TIMESTAMP"
 
+function iterm2Integration() {
+	curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
+}
+
 function cleanupBackupDir() {
 	echo "Remove empty dirs in the $BACKUP_DIR_NAME"
 	find "$(pwd)/$BACKUP_DIR_NAME" -type d -depth 1 -empty -delete
@@ -26,6 +30,8 @@ function doIt() {
 	rsync --exclude-from=.excluded_from_sync \
 				--backup-dir=$BACKUP_PATH \
 				-avhb --no-perms . $DEST_PATH;
+
+	iterm2Integration;
 	source ~/.bash_profile;
 }
 

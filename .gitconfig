@@ -76,6 +76,8 @@
 		fi \
 	}; f"
 
+	br = for-each-ref --sort=committerdate refs/heads/ refs/remotes --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(color:red)%(objectname:short)%(color:reset) - %(contents:subject) - %(authorname) (%(color:green)%(committerdate:relative)%(color:reset))'
+
 [apply]
 
 	# Detect whitespace errors when applying a patch
@@ -128,7 +130,7 @@
 [commit]
 
 	# https://help.github.com/articles/signing-commits-using-gpg/
-	gpgsign = true
+	gpgsign = false
 
 [diff]
 
@@ -149,6 +151,7 @@
 
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
+	tool = vscode
 
 [push]
 
@@ -180,3 +183,6 @@
 [url "git://gist.github.com/"]
 
 	insteadOf = "gist:"
+
+[mergetool "vscode"]
+    cmd = code --wait $MERGED

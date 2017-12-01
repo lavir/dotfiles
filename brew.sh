@@ -23,6 +23,7 @@ brew install gnu-sed --with-default-names
 # running `chsh`.
 brew install bash
 brew tap homebrew/versions
+brew tap Caskroom/cask
 brew install bash-completion2
 
 # Switch to using brew-installed bash as default shell
@@ -41,9 +42,10 @@ brew install ringojs
 brew install narwhal
 
 # Install more recent versions of some macOS tools.
-brew install vim --with-override-system-vi
+#brew install vim --with-override-system-vi
 brew install homebrew/dupes/grep
 brew install homebrew/dupes/openssh
+brew install openssl
 brew install homebrew/dupes/screen
 brew install homebrew/php/php56 --with-gmp
 
@@ -85,21 +87,61 @@ brew install dark-mode
 #brew install exiv2
 brew install git
 brew install git-lfs
-brew install imagemagick --with-webp
+
+# Use GraphicsMagick instead
+# brew install imagemagick --with-webp
+brew install ghostscript
+brew install graphicsmagick
+
+# Image manipulation library
+# http://www.ijg.org
+brew install jpeg
+
+brew install Caskroom/cask/ksdiff
+brew install duti
+brew install exiftool
+brew install ffmpeg
+brew install htop-osx
+brew install httpie
 brew install lua
 brew install lynx
+brew install n
+brew install ngrep
 brew install p7zip
 brew install pigz
 brew install pv
+brew install python
+brew install python3
 brew install rename
 brew install rhino
 brew install speedtest_cli
+brew install ssh-audit
 brew install ssh-copy-id
 brew install testssl
 brew install tree
 brew install vbindiff
 brew install webkit2png
+brew install youtube-dl
 brew install zopfli
 
+# Command-line tool to manage your ssh connections
+# https://github.com/emre/storm
+brew install stormssh
+
+# Version Control Visualization Tool
+# brew install gource
+
+# DNS benchmark utility
+# brew install namebench
+
+# For the copy-to-pluto script
+# brew install jhead
+brew install terminal-notifier
+# brew install nmap
+
+
+# Install Hammerspoon (http://www.hammerspoon.org/)
+# brew tap Caskroom/cask
+# brew install Caskroom/cask/hammerspoon
 # Remove outdated versions from the cellar.
 brew cleanup

@@ -11,7 +11,35 @@ elif infocmp xterm-256color >/dev/null 2>&1; then
 	export TERM='xterm-256color';
 fi;
 
+addLines(){
+	if [ $HOME == $PWD ]; then
+			PWDNAME="~"
+	elif [ $HOME ==  ${PWD:0:${#HOME}} ]; then
+			PWDNAME="~${PWD:${#HOME}}"
+	else
+		PWDNAME="${PWD}"
+	fi
+
+	local currentDateTime=`date +'%F %H:%M:%S'`
+	withoutColor=$(printf "${USER} at ${HOSTNAME} in ${PWDNAME} ${1} ${currentDateTime}")
+
+	local fillSize=$(($COLUMNS-${#withoutColor}))
+	local fillLines="${black}"
+
+	while [ $fillSize -gt 0 ];
+	do
+		fillLines="${fillLines}─";
+		fillSize=$(($fillSize-1));
+	done
+
+	echo -e "${fillLines} ${currentDateTime}";
+}
+
 prompt_git() {
+	# Set the terminal title to the current working directory.
+	# last dir
+	echo -e -n "\033];${PWD##*/}\007" 
+
 	local s='';
 	local branchName='';
 
@@ -55,8 +83,13 @@ prompt_git() {
 
 		[ -n "${s}" ] && s=" [${s}]";
 
+		local fillLine=$(addLines " on ${branchName}${s}");
+		# echo -e "${1}${branchName}${blue}${s} ${fillLine}";
 		echo -e "${1}${branchName}${2}${s}";
 	else
+		# local fillLine=$(addLines)
+		# echo -e " ${fillLine}";
+		# # return;
 		return;
 	fi;
 }
