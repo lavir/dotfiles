@@ -31,6 +31,13 @@ initITerm2() {
   copyTo "/Users/lavir/Library/Saved Application State/com.googlecode.iterm2.savedState" "/Users/lavir/Library/Saved Application State/"
 }
 
+init1Password(){
+  echo "Init 1Password"
+  copyTo "/Applications/1Password 6.app" "/Applications/"
+  copyTo "/Users/lavir/Library/Preferences/com.agilebits.onepassword4.plist" "/Users/lavir/Library/Preferences/"
+  copyTo "/Users/lavir/Library/Cookies/com.agilebits.onepassword4.binarycookies" "/Users/lavir/Library/Cookies/com.agilebits.onepassword4.binarycookies"
+}
+
 initPathFinder() {
   echo "Init PathFinder"
 
