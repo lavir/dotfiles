@@ -32,6 +32,9 @@ if ! fgrep -q '/usr/local/bin/fish' /etc/shells; then
   chsh -s /usr/local/bin/fish;
 fi;
 
+# Mac App Store command-line interface
+brew install mas
+
 # Install `wget` with IRI support.
 brew install wget --with-iri
 
