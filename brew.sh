@@ -30,6 +30,7 @@ brew tap Caskroom/cask
 if ! fgrep -q '/usr/local/bin/fish' /etc/shells; then
   echo '/usr/local/bin/fish' | sudo tee -a /etc/shells;
   chsh -s /usr/local/bin/fish;
+  curl -L https://get.oh-my.fish | fish
 fi;
 
 # Mac App Store command-line interface
