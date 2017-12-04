@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 src=/Volumes/Apollo_Comptel/
-dst=/Users/lavir/temp-folder/testinit
+dst=/
 
 doIt() {
   installBrew
   initITerm2
   initPathFinder
+  init1Password
 }
 
 copyTo() {

@@ -4,7 +4,7 @@ cd "$(dirname "${BASH_SOURCE}")";
 
 # git pull origin master;
 
-DEST_PATH=/Users/lavir/temp-folder/dotfiles_desc
+DEST_PATH=/Users/lavir/
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
 BACKUP_DIR_NAME="backups"
 BACKUP_PATH="$(pwd)/$BACKUP_DIR_NAME/$TIMESTAMP"
